@@ -2,6 +2,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 import { ethers } from 'ethers';
+import { BigNumber } from 'bignumber.js';
 import { IGetBlockByNumberConfig, IGetLatestBlockConfig } from '../interfaces';
 
 export async function getLatestBlock(config: IGetLatestBlockConfig) {
@@ -40,6 +41,7 @@ export async function getBlockByNumber(config: IGetBlockByNumberConfig) {
   } = config;
   const commonLog = `getBlockByNumber (${blockNumber}) -`;
   const printLogs = typeof verbose !== 'undefined' && verbose;
+  const blockNumberInHex = `0x${new BigNumber(blockNumber).toString(16)}`;
 
   if (printLogs) {
     console.log(`[INFO] ${commonLog} Starts`);
@@ -48,9 +50,10 @@ export async function getBlockByNumber(config: IGetBlockByNumberConfig) {
   try {
     const provider = new ethers.providers.JsonRpcProvider(connection.endpoint);
 
-    const block = await provider.getBlockWithTransactions(blockNumber);
+    const block = await provider.getBlockWithTransactions(blockNumberInHex);
 
     if (printLogs) {
+      console.log(`[INFO] ${commonLog} Success: This block contains ${block.transactions.length} transactions`);
       console.log(`[INFO] ${commonLog} Success: ${JSON.stringify(block)}`);
     }
 

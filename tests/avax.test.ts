@@ -6,16 +6,16 @@ import { EvmIndexer } from '../src';
 const endpoint = 'https://api.avax-test.network/ext/bc/C/rpc';
 
 describe('[Avalanche]', () => {
-  test('getLatestBlock()', async () => {
+  test('getLatestBlock() + getBlockByNumber()', async () => {
     const blockNumber = await EvmIndexer.getLatestBlock({
-      endpoint,
+      connection: { endpoint },
     });
 
     expect(typeof blockNumber).not.toBe('undefined');
     expect(blockNumber.includes('0x')).toBeTruthy();
 
     const blockNumberInDec = await EvmIndexer.getLatestBlock({
-      endpoint,
+      connection: { endpoint },
       format: 'dec',
     });
 
@@ -23,11 +23,19 @@ describe('[Avalanche]', () => {
     expect(blockNumberInDec.includes('0x')).toBeFalsy();
 
     const blockNumberWithVerbose = await EvmIndexer.getLatestBlock({
-      endpoint,
+      connection: { endpoint },
       verbose: true,
     });
 
     expect(typeof blockNumberWithVerbose).not.toBe('undefined');
+
+    const block = await EvmIndexer.getBlockByNumber({
+      connection: { endpoint },
+      blockNumber: blockNumberInDec,
+      verbose: true,
+    });
+
+    expect(typeof block).not.toBe('undefined');
+    expect(String(block.number)).toBe(blockNumberInDec);
   });
 });
-
