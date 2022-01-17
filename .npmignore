@@ -1,0 +1,12 @@
+src/
+.git/
+tests/
+.github/
+.gitignore
+.npmignore
+node_modules/
+.eslintignore
+tsconfig.json
+.eslintrc.json
+.gitlab-ci.yml
+increase-built.js

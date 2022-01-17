@@ -1,0 +1,28 @@
+{
+  "name": "unichain",
+  "version": "0.0.1",
+  "description": "Unifying all blockchain related utilities such as node api endpoints and transaction crawling",
+  "author": "Chris Liu <chrisliupascal@gmail.com>",
+  "repository": "git@github.com:nighostchris/unichain.git",
+  "license": "MIT",
+  "main": "./built/index.js",
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [
+    "bitcoin",
+    "ethereum",
+    "unichain",
+    "avalanche",
+    "typescript",
+    "blockchain"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^8.7.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.23.4",
+    "typescript": "^4.5.4"
+  }
+}
