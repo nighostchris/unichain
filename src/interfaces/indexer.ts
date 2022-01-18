@@ -1,6 +1,5 @@
 import { IConnection } from './common';
-
-export type TNumericFormat = 'hex' | 'dec';
+import { TNumericFormat } from './type';
 
 export interface IGetLatestBlockConfig {
   connection: IConnection
