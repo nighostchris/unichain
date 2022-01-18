@@ -3,7 +3,7 @@ import { EvmFilter, EvmIndexer } from '../src';
 const endpoint = 'https://api.avax-test.network/ext/bc/C/rpc';
 
 describe('[EVM Filter]', () => {
-  test('filterErc20Transactions()', async () => {
+  test('[AVAX] filterErc20Transactions() - #5012518 ERC-20', async () => {
     const block = await EvmIndexer.getBlockByNumber({
       connection: { endpoint },
       blockNumber: '5012518',
@@ -17,6 +17,7 @@ describe('[EVM Filter]', () => {
       trackedAddresses: ['0xfb89b915a6245391ad09bc7ffdce90f67d7f1f24']
     });
 
+    // https://testnet.snowtrace.io/tx/0xa1a80ab96c5f4036fd08240dfe1b47382aa1ec9794a42c30b6829e8c76a62c43
     expect(typeof filteredTx !== 'undefined');
     expect(filteredTx[0].blockNumber).toBe('5012518');
     expect(filteredTx[0].hash).toBe('0xa1a80ab96c5f4036fd08240dfe1b47382aa1ec9794a42c30b6829e8c76a62c43');
