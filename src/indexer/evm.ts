@@ -3,9 +3,9 @@
 /* eslint-disable no-restricted-syntax */
 import { ethers } from 'ethers';
 import { BigNumber } from 'bignumber.js';
-import { IGetBlockByNumberConfig, IGetLatestBlockConfig } from '../interfaces';
+import { IEvmBlock, IGetBlockByNumberConfig, IGetLatestBlockConfig } from '../interfaces';
 
-export async function getLatestBlock(config: IGetLatestBlockConfig) {
+export async function getLatestBlock(config: IGetLatestBlockConfig): Promise<string> {
   const { connection, format, verbose } = config;
   const printLogs = typeof verbose !== 'undefined' && verbose;
 
@@ -35,10 +35,8 @@ export async function getLatestBlock(config: IGetLatestBlockConfig) {
 }
 
 // Always take in block number in decimal value
-export async function getBlockByNumber(config: IGetBlockByNumberConfig) {
-  const {
-    connection, blockNumber, verbose,
-  } = config;
+export async function getBlockByNumber(config: IGetBlockByNumberConfig): Promise<IEvmBlock> {
+  const { connection, blockNumber, verbose } = config;
   const commonLog = `getBlockByNumber (${blockNumber}) -`;
   const printLogs = typeof verbose !== 'undefined' && verbose;
   const blockNumberInHex = `0x${new BigNumber(blockNumber).toString(16)}`;
@@ -50,7 +48,30 @@ export async function getBlockByNumber(config: IGetBlockByNumberConfig) {
   try {
     const provider = new ethers.providers.JsonRpcProvider(connection.endpoint);
 
-    const block = await provider.getBlockWithTransactions(blockNumberInHex);
+    const rawBlock = await provider.getBlockWithTransactions(blockNumberInHex);
+
+    const block: IEvmBlock = {
+      hash: rawBlock.hash,
+      parentHash: rawBlock.parentHash,
+      number: `0x${rawBlock.number.toString(16)}`,
+      timestamp: rawBlock.timestamp.toString(),
+      gasLimit: rawBlock.gasLimit.toHexString(),
+      transactions: rawBlock.transactions.map((tx) => ({
+        hash: tx.hash,
+        type: tx.type,
+        blockHash: String(tx.blockHash),
+        blockNumber: typeof tx.blockNumber !== 'undefined' ? `0x${tx.blockNumber.toString(16)}` : undefined,
+        confirmations: tx.confirmations,
+        from: tx.from,
+        gasPrice: typeof tx.gasPrice !== 'undefined' ? tx.gasPrice.toHexString() : undefined,
+        gasLimit: tx.gasLimit.toHexString(),
+        to: tx.to,
+        value: tx.value.toHexString(),
+        nonce: tx.nonce,
+        data: tx.data,
+        chainId: tx.chainId,
+      })),
+    };
 
     if (printLogs) {
       console.log(`[INFO] ${commonLog} Success: This block contains ${block.transactions.length} transactions`);

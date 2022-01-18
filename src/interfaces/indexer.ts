@@ -1,10 +1,6 @@
-export type TNumericFormat = 'hex' | 'dec';
+import { IConnection } from './common';
 
-export interface IConnection {
-  endpoint: string
-  username?: string
-  password?: string
-}
+export type TNumericFormat = 'hex' | 'dec';
 
 export interface IGetLatestBlockConfig {
   connection: IConnection

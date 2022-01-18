@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js';
+
 import { EvmIndexer } from '../src';
 
 // Avalanche Fuji Testnet Explorer
@@ -36,6 +38,6 @@ describe('[Avalanche]', () => {
     });
 
     expect(typeof block).not.toBe('undefined');
-    expect(String(block.number)).toBe(blockNumberInDec);
+    expect(String(block.number)).toBe(`0x${new BigNumber(blockNumberInDec).toString(16)}`);
   });
 });
