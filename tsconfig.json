@@ -1,24 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2021",
-    "module": "commonjs",
     "strict": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+    "target": "es2021",
+    "rootDir": "./src/",
+    "declaration": true,
+    "module": "commonjs",
+    "outDir": "./built/",
+    "skipLibCheck": true,
     "noImplicitAny": true,
     "removeComments": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
     "preserveConstEnums": true,
-    "skipLibCheck": true,
-    "declaration": true,
-    "outDir": "./built/",
-    "rootDir": "./src/",
-    "types": ["node"]
+    "allowSyntheticDefaultImports": true,
   },
   "include": ["src/**/*"],
-  "exclude": [
-    "*.js",
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["node_modules"]
 }

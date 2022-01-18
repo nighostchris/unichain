@@ -4,6 +4,7 @@ tests/
 .github/
 .gitignore
 .npmignore
+coverage/
 node_modules/
 .eslintignore
 tsconfig.json
