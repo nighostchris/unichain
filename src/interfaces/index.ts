@@ -9,3 +9,4 @@ export * from './indexer';
 
 // Block Interfaces
 export * from './block/evm';
+export * from './block/luna';

@@ -1,4 +1,4 @@
-import { LunaIndexer, IConnection, TBlockchain } from '../../src';
+import { LunaIndexer } from '../../src';
 
 // Terra Bombay 12 Testnet Explorer https://finder.terra.money/testnet/
 // Testnet JSON-RPC Endpoint
@@ -19,5 +19,14 @@ describe('[LUNA Indexer]', () => {
     });
 
     expect(typeof blockNumberWithVerbose).not.toBe('undefined');
+
+    const block = await LunaIndexer.getBlockByNumber({
+      connection: { endpoint, chainId },
+      blockNumber,
+      verbose: true,
+    });
+
+    expect(typeof block).not.toBe('undefined');
+    expect(block.number).toBe(blockNumber);
   });
 });
