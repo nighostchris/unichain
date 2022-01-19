@@ -3,9 +3,10 @@
 /* eslint-disable import/prefer-default-export */
 import BigNumber from 'bignumber.js';
 import { ethers, BigNumber as ethersBigNumber } from 'ethers';
-import { EVM_MINIMUM_UNIT } from '..';
 
-import { ERC20_TRANSFER_FUNCTION, ERC20_TRANSFER_EVENT, TRANSFER_TOPIC } from '../constants';
+import {
+  EVM_MINIMUM_UNIT, ERC20_TRANSFER_FUNCTION, ERC20_TRANSFER_EVENT, TRANSFER_TOPIC,
+} from '../constants';
 import { IErc20Event, IFilterEvmTransactionParams, IFilterTransaction } from '../interfaces';
 
 export function decodeErc20Log(log: ethers.providers.Log): IErc20Event {
@@ -29,6 +30,7 @@ export async function filterEvmTransaction(params: IFilterEvmTransactionParams):
   } = params;
   let foundToken = false;
   let calculateFee = false;
+
   const transactions: IFilterTransaction[] = [];
   const trackedAddressesHashmap: { [address: string]: boolean } = {};
   const commonLog = `filterEvmTransaction (${blockchain}:${transaction.hash}) -`;

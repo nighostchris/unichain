@@ -1,6 +1,6 @@
 {
   "name": "unichain",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Unifying all blockchain related utilities such as node api endpoints and transaction crawling",
   "author": "Chris Liu <chrisliupascal@gmail.com>",
   "repository": "git@github.com:nighostchris/unichain.git",

@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-restricted-syntax */
 import { ethers } from 'ethers';
 import { BigNumber } from 'bignumber.js';
@@ -14,7 +15,11 @@ export async function getLatestBlock(config: IGetLatestBlockConfig): Promise<str
   }
 
   try {
-    const provider = new ethers.providers.JsonRpcProvider(connection.endpoint);
+    const provider = typeof connection.method !== 'undefined'
+      ? connection.method === 'http'
+        ? new ethers.providers.JsonRpcProvider(connection.endpoint)
+        : new ethers.providers.WebSocketProvider(connection.endpoint)
+      : new ethers.providers.JsonRpcProvider(connection.endpoint);
 
     const latestBlock = await provider.getBlockNumber();
 
@@ -46,7 +51,11 @@ export async function getBlockByNumber(config: IGetBlockByNumberConfig): Promise
   }
 
   try {
-    const provider = new ethers.providers.JsonRpcProvider(connection.endpoint);
+    const provider = typeof connection.method !== 'undefined'
+      ? connection.method === 'http'
+        ? new ethers.providers.JsonRpcProvider(connection.endpoint)
+        : new ethers.providers.WebSocketProvider(connection.endpoint)
+      : new ethers.providers.JsonRpcProvider(connection.endpoint);
 
     const rawBlock = await provider.getBlockWithTransactions(blockNumberInHex);
 
