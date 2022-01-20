@@ -1,5 +1,6 @@
 import { IConnection } from './common';
 import { IEvmTransaction } from './block/evm';
+import { ITerraTransaction } from './block/terra';
 import { TBlockchain, TTransactionType } from './type';
 
 export interface IErc20Event {
@@ -8,11 +9,18 @@ export interface IErc20Event {
   value: string
 }
 
-export interface IFilterEvmTransactionParams {
+export interface IFilterTransactionParams {
+  trackedAddresses: string[]
+}
+
+export interface IFilterEvmTransactionParams extends IFilterTransactionParams {
   blockchain: TBlockchain
   connection: IConnection
-  trackedAddresses: string[]
   transaction: IEvmTransaction
+}
+
+export interface IFilterTerraTransactionParams extends IFilterTransactionParams {
+  transaction: ITerraTransaction
 }
 
 export interface IFilterTransaction {

@@ -24,7 +24,7 @@ export function decodeErc20Log(log: ethers.providers.Log): IErc20Event {
   };
 }
 
-export async function filterEvmTransaction(params: IFilterEvmTransactionParams): Promise<IFilterTransaction[]> {
+export async function filterTransaction(params: IFilterEvmTransactionParams): Promise<IFilterTransaction[]> {
   const {
     blockchain, transaction, trackedAddresses, connection,
   } = params;
@@ -33,11 +33,13 @@ export async function filterEvmTransaction(params: IFilterEvmTransactionParams):
 
   const transactions: IFilterTransaction[] = [];
   const trackedAddressesHashmap: { [address: string]: boolean } = {};
-  const commonLog = `filterEvmTransaction (${blockchain}:${transaction.hash}) -`;
+  const commonLog = `filteTransaction (${blockchain}:${transaction.hash}) -`;
 
   for (const addr of trackedAddresses) {
     trackedAddressesHashmap[addr.toLowerCase()] = true;
   }
+
+  console.log(`${commonLog} Starts`);
 
   const provider = new ethers.providers.JsonRpcProvider(connection.endpoint);
 

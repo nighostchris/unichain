@@ -1,19 +1,19 @@
-import { EvmFilter, EvmIndexer } from '../src';
+import { EvmFilter, EvmIndexer } from '../../src';
 
-const endpoint = 'https://api.avax-test.network/ext/bc/C/rpc';
+const evmEndpoint = 'https://api.avax-test.network/ext/bc/C/rpc';
 
 describe('[EVM Filter]', () => {
-  test('[AVAX] filterErc20Transactions() - #5012518 ERC-20', async () => {
+  test('[AVAX] filterTransaction() - #5012518 ERC-20', async () => {
     const block = await EvmIndexer.getBlockByNumber({
-      connection: { endpoint },
+      connection: { endpoint: evmEndpoint },
       blockNumber: '5012518',
       verbose: true,
     });
 
-    const filteredTx = await EvmFilter.filterEvmTransaction({
+    const filteredTx = await EvmFilter.filterTransaction({
       blockchain: 'AVAX',
       transaction: block.transactions[0],
-      connection: { endpoint },
+      connection: { endpoint: evmEndpoint },
       trackedAddresses: ['0xfb89b915a6245391ad09bc7ffdce90f67d7f1f24']
     });
 

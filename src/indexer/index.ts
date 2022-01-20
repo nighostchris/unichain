@@ -1,2 +1,2 @@
 export * as EvmIndexer from './evm';
-export * as LunaIndexer from './luna';
+export * as TerraIndexer from './terra';

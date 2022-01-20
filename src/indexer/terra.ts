@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
-/* eslint-disable import/prefer-default-export */
 import { LCDClient } from '@terra-money/terra.js';
 
-import { ILunaBlock, IGetBlockByNumberConfig, IGetLatestBlockConfig } from '../interfaces';
+import { ITerraBlock, IGetBlockByNumberConfig, IGetLatestBlockConfig } from '../interfaces';
 
 export async function getLatestBlock(config: IGetLatestBlockConfig): Promise<string> {
   const { connection, verbose } = config;
@@ -35,7 +34,7 @@ export async function getLatestBlock(config: IGetLatestBlockConfig): Promise<str
   }
 }
 
-export async function getBlockByNumber(config: IGetBlockByNumberConfig): Promise<ILunaBlock> {
+export async function getBlockByNumber(config: IGetBlockByNumberConfig): Promise<ITerraBlock> {
   const { connection, blockNumber, verbose } = config;
   const commonLog = `getBlockByNumber (${blockNumber}) -`;
   const printLogs = typeof verbose !== 'undefined' && verbose;
@@ -51,6 +50,7 @@ export async function getBlockByNumber(config: IGetBlockByNumberConfig): Promise
     });
 
     const { block, block_id } = await lcdClient.tendermint.blockInfo(parseInt(blockNumber, 10));
+    const transactions = await lcdClient.tx.txInfosByHeight(parseInt(blockNumber, 10));
 
     const resultBlock = {
       hash: block_id.hash,
@@ -58,12 +58,11 @@ export async function getBlockByNumber(config: IGetBlockByNumberConfig): Promise
       number: block.header.height,
       chainId: block.header.chain_id,
       timestamp: new Date(block.header.time).valueOf().toString(),
-      transactions: block.data.txs === null ? [] : block.data.txs,
+      transactions,
     };
 
     if (printLogs) {
-      console.log(`[INFO] ${commonLog} Success: This block contains `
-        + `${block.data.txs !== null ? block.data.txs.length : 0} transactions`);
+      console.log(`[INFO] ${commonLog} Success: This block contains ${transactions.length} transactions`);
       console.log(`[INFO] ${commonLog} Success: ${JSON.stringify(resultBlock)}`);
     }
 
