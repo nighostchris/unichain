@@ -13,7 +13,22 @@ describe('[LUNA Filter]', () => {
     });
 
     const filteredTx = await TerraFilter.filterTransaction({
-      transaction: block.transactions[2],
+      block,
+      trackedAddresses: ['terra1z90twxf7tw7p4guwxwmy9pg0m9c4fuw4kgz673']
+    });
+
+    expect(typeof filteredTx !== 'undefined');
+  });
+
+  test('filterTransaction() - #7459252 AUT Transfer', async () => {
+    const block = await TerraIndexer.getBlockByNumber({
+      connection: { endpoint, chainId },
+      blockNumber: '7459252',
+      verbose: true,
+    });
+
+    const filteredTx = await TerraFilter.filterTransaction({
+      block,
       trackedAddresses: ['terra1z90twxf7tw7p4guwxwmy9pg0m9c4fuw4kgz673']
     });
 

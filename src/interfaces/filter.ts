@@ -1,6 +1,8 @@
+import { BaseProvider } from '@ethersproject/providers';
+
 import { IConnection } from './common';
-import { IEvmTransaction } from './block/evm';
-import { ITerraTransaction } from './block/terra';
+import { IEvmBlock } from './block/evm';
+import { ITerraBlock } from './block/terra';
 import { TBlockchain, TTransactionType } from './type';
 
 export interface IErc20Event {
@@ -14,13 +16,14 @@ export interface IFilterTransactionParams {
 }
 
 export interface IFilterEvmTransactionParams extends IFilterTransactionParams {
+  block: IEvmBlock
   blockchain: TBlockchain
-  connection: IConnection
-  transaction: IEvmTransaction
+  provider?: BaseProvider
+  connection?: IConnection
 }
 
 export interface IFilterTerraTransactionParams extends IFilterTransactionParams {
-  transaction: ITerraTransaction
+  block: ITerraBlock
 }
 
 export interface IFilterTransaction {
@@ -33,4 +36,5 @@ export interface IFilterTransaction {
   type: TTransactionType
   memo: string
   blockchain: string
+  ticker?: string // For blockchains with multiple native tokens only
 }

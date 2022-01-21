@@ -12,7 +12,7 @@ describe('[EVM Filter]', () => {
 
     const filteredTx = await EvmFilter.filterTransaction({
       blockchain: 'AVAX',
-      transaction: block.transactions[0],
+      block,
       connection: { endpoint: evmEndpoint },
       trackedAddresses: ['0xfb89b915a6245391ad09bc7ffdce90f67d7f1f24']
     });
